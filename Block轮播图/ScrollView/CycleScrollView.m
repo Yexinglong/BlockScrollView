@@ -176,6 +176,10 @@
     if (self.contentViews == nil) {
         self.contentViews = [@[] mutableCopy];
     }
+    for(int i =0; i<self.contentViews.count;i++){
+        id view =self.contentViews[i];
+        [view removeFromSuperview];
+    }
     [self.contentViews removeAllObjects];
     
     if (self.fetchContentViewAtIndex) {
