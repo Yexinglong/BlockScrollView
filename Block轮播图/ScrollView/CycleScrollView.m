@@ -150,11 +150,8 @@
     }
 }
 
-/**
- *  设置scrollView的content数据源，即contentViews
- */
-- (void)setScrollViewContentDataSource
-{
+-(void)refresh{
+    [self configContentViews];
     if (self.totalPagesCount) {
         self.totalPageCount=self.totalPagesCount();
         if (_pageControl.pageNumbers !=self.totalPageCount) {
@@ -162,9 +159,17 @@
             _pageControl=nil;
             [self addSubview:self.pageControl];
             [_pageControl setCurrentPage:self.currentPageIndex];
-
+            
         }
     }
+}
+
+/**
+ *  设置scrollView的content数据源，即contentViews
+ */
+- (void)setScrollViewContentDataSource
+{
+  
     NSInteger previousPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex - 1];
     NSInteger rearPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
     

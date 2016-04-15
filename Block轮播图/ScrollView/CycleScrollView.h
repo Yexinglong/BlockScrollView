@@ -38,6 +38,5 @@
 /**
  *  重新刷新
  */
-- (void)configContentViews;
-
+-(void)refresh;
 @end

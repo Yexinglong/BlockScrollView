@@ -51,7 +51,7 @@ static const NSInteger kTotalPageCount = 4;
 
 -(void)viewsArrayAdd:(NSMutableArray *)array{
     [array addObjectsFromArray:array];
-    [self.mainScorllView configContentViews];
+    [self.mainScorllView refresh];
 }
 
 - (void)didReceiveMemoryWarning {
