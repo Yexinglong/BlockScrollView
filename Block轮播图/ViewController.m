@@ -40,12 +40,18 @@ static const NSInteger kTotalPageCount = 4;
         return viewsArray[pageIndex];
     };
     //当点击的时候，执行的block
-        self.mainScorllView.TapActionBlock = ^(NSInteger pageIndex){
+    __weak __typeof(&*self) weakVar = self;
+    self.mainScorllView.TapActionBlock = ^(NSInteger pageIndex){
             NSLog(@"点击了第%ld个",pageIndex);
-    
+            [weakVar viewsArrayAdd:viewsArray];
         };
     [self.view addSubview:_mainScorllView];
     // Do any additional setup after loading the view, typically from a nib.
+}
+
+-(void)viewsArrayAdd:(NSMutableArray *)array{
+    [array addObjectsFromArray:array];
+    [self.mainScorllView configContentViews];
 }
 
 - (void)didReceiveMemoryWarning {

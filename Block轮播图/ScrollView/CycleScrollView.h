@@ -35,4 +35,9 @@
  **/
 @property (nonatomic , copy) void (^TapActionBlock)(NSInteger pageIndex);
 
+/**
+ *  重新刷新
+ */
+- (void)configContentViews;
+
 @end

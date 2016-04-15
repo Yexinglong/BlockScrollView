@@ -20,6 +20,8 @@
 @property (nonatomic , assign) NSInteger currentPageIndex;
 @property (nonatomic , assign) NSInteger totalPageCount;
 @property (nonatomic , strong) NSMutableArray *contentViews;
+@property (nonatomic , strong) NSMutableArray *pageViews;
+
 @property (nonatomic , strong) UIScrollView *scrollView;
 
 @property (nonatomic , strong) NSTimer *animationTimer;
@@ -55,6 +57,7 @@
 
 - (void)setTotalPagesCount:(NSInteger (^)(void))totalPagesCount
 {
+    _totalPagesCount=totalPagesCount;
     self.totalPageCount = totalPagesCount();
     if (self.totalPageCount > 0) {
         if (self.totalPageCount > 1) {
@@ -65,9 +68,12 @@
             self.scrollView.scrollEnabled = NO;
         }
         [self configContentViews];
+        
         [self addSubview:self.pageControl];
     }
+
 }
+
 
 - (void)setFetchContentViewAtIndex:(UIView *(^)(NSInteger index))fetchContentViewAtIndex
 {
@@ -112,6 +118,7 @@
         self.scrollView.pagingEnabled = YES;
         [self addSubview:self.scrollView];
         self.currentPageIndex = 0;
+        _pageViews =[NSMutableArray array];
     }
     return self;
 }
@@ -148,6 +155,16 @@
  */
 - (void)setScrollViewContentDataSource
 {
+    if (self.totalPagesCount) {
+        self.totalPageCount=self.totalPagesCount();
+        if (_pageControl.pageNumbers !=self.totalPageCount) {
+            [_pageControl removeFromSuperview];
+            _pageControl=nil;
+            [self addSubview:self.pageControl];
+            [_pageControl setCurrentPage:self.currentPageIndex];
+
+        }
+    }
     NSInteger previousPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex - 1];
     NSInteger rearPageIndex = [self getValidNextPageIndexWithPageIndex:self.currentPageIndex + 1];
     
